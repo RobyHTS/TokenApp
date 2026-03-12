@@ -49,7 +49,15 @@ export async function PATCH(
     await db.doctorSchedule.deleteMany({ where: { doctorId } });
     if (schedules.length > 0) {
       await db.doctorSchedule.createMany({
-        data: schedules.map((s: Record<string, unknown>) => ({ ...s, doctorId })),
+        data: schedules.map((s: Record<string, unknown>) => ({
+          doctorId,
+          dayOfWeek: s.dayOfWeek as number,
+          openTime: s.openTime as string,
+          closeTime: s.closeTime as string,
+          maxPatientsPerDay: (s.maxPatientsPerDay as number) ?? 30,
+          avgConsultMinutes: (s.avgConsultMinutes as number) ?? 10,
+          isActive: (s.isActive as boolean) ?? true,
+        })),
       });
     }
   }
