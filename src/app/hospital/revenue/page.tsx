@@ -100,7 +100,7 @@ export default function RevenuePage() {
                   />
                   <YAxis tick={{ fontSize: 11 }} />
                   <Tooltip
-                    formatter={(value: number) => [`₹${value}`, "Revenue"]}
+                    formatter={(value) => [`₹${value}`, "Revenue"]}
                     labelFormatter={(label) => `Date: ${label}`}
                   />
                   <Bar dataKey="revenue" fill="#3b82f6" radius={[4, 4, 0, 0]} />
