@@ -1,0 +1,144 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Hospital {
+  id          String   @id @default(cuid())
+  name        String
+  location    String
+  phone       String   @unique
+  email       String?  @unique
+  password    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  doctors     Doctor[]
+  favorites   Favorite[]
+}
+
+model Doctor {
+  id             String       @id @default(cuid())
+  hospitalId     String
+  name           String
+  phone          String
+  specialization String
+  image          String?
+  status         DoctorStatus @default(IN_OP)
+  estimatedReturn DateTime?
+  tokenEnabled   Boolean      @default(true)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  hospital    Hospital         @relation(fields: [hospitalId], references: [id], onDelete: Cascade)
+  schedules   DoctorSchedule[]
+  tokens      Token[]
+  favorites   Favorite[]
+}
+
+model DoctorSchedule {
+  id                   String  @id @default(cuid())
+  doctorId             String
+  dayOfWeek            Int     // 0=Sunday, 1=Monday, ..., 6=Saturday
+  openTime             String  // "09:00"
+  closeTime            String  // "17:00"
+  maxPatientsPerDay    Int     @default(30)
+  avgConsultMinutes    Int     @default(10)
+  isActive             Boolean @default(true)
+
+  doctor Doctor @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+}
+
+model Patient {
+  id            String   @id @default(cuid())
+  name          String
+  phone         String   @unique
+  image         String?
+  password      String
+  walletBalance Float    @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  tokens        Token[]
+  transactions  Transaction[]
+  favorites     Favorite[]
+  notifications Notification[]
+}
+
+model Token {
+  id          String      @id @default(cuid())
+  doctorId    String
+  patientId   String?
+  tokenNumber Int
+  status      TokenStatus @default(PENDING)
+  date        DateTime    @default(now())
+  fee         Float       @default(0)
+  isWalkIn    Boolean     @default(false)
+  patientName String?     // for walk-in patients
+  patientPhone String?    // for walk-in patients
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  doctor  Doctor   @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  patient Patient? @relation(fields: [patientId], references: [id], onDelete: SetNull)
+}
+
+model Transaction {
+  id          String          @id @default(cuid())
+  patientId   String
+  amount      Float
+  type        TransactionType
+  description String
+  createdAt   DateTime        @default(now())
+
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+}
+
+model Favorite {
+  id         String   @id @default(cuid())
+  patientId  String
+  hospitalId String?
+  doctorId   String?
+  createdAt  DateTime @default(now())
+
+  patient  Patient   @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  hospital Hospital? @relation(fields: [hospitalId], references: [id], onDelete: Cascade)
+  doctor   Doctor?   @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  patientId String
+  title     String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  patient Patient @relation(fields: [patientId], references: [id], onDelete: Cascade)
+}
+
+enum DoctorStatus {
+  IN_OP
+  IN_IP
+  EMERGENCY
+  ON_LEAVE
+}
+
+enum TokenStatus {
+  PENDING
+  CURRENT
+  COMPLETED
+  CANCELLED
+  SKIPPED
+}
+
+enum TransactionType {
+  CREDIT
+  DEBIT
+}
