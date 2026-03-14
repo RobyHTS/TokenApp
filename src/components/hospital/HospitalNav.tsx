@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Hospital, LayoutDashboard, Users, BarChart3, LogOut } from "lucide-react";
+import { Hospital, LayoutDashboard, Users, BarChart3, LogOut, CreditCard } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface HospitalNavProps {
@@ -22,6 +22,7 @@ export default function HospitalNav({ hospitalName }: HospitalNavProps) {
     { href: "/hospital/dashboard", label: "Dashboard", icon: LayoutDashboard },
     { href: "/hospital/doctors", label: "Doctors", icon: Users },
     { href: "/hospital/revenue", label: "Revenue", icon: BarChart3 },
+    { href: "/hospital/payout", label: "Payout", icon: CreditCard },
   ];
 
   return (

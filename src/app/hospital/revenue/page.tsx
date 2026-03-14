@@ -10,7 +10,8 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { TrendingUp, Ticket, XCircle, CheckCircle, IndianRupee } from "lucide-react";
+import { TrendingUp, Ticket, XCircle, CheckCircle, IndianRupee, CreditCard } from "lucide-react";
+import Link from "next/link";
 
 interface RevenueData {
   totalBookings: number;
@@ -110,13 +111,21 @@ export default function RevenuePage() {
           )}
 
           <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
-            <h2 className="font-semibold text-gray-900 mb-2">Payout Request</h2>
-            <p className="text-sm text-gray-500 mb-4">
-              Request a payout for your accumulated revenue share
-            </p>
-            <button className="bg-blue-600 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-blue-700 transition-colors">
-              Request Payout
-            </button>
+            <div className="flex items-start justify-between gap-4 flex-wrap">
+              <div>
+                <h2 className="font-semibold text-gray-900 mb-1">Payout Details</h2>
+                <p className="text-sm text-gray-500">
+                  Add your bank account or UPI ID to receive your revenue share
+                </p>
+              </div>
+              <Link
+                href="/hospital/payout"
+                className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-blue-700 transition-colors shrink-0"
+              >
+                <CreditCard className="w-4 h-4" />
+                Manage Payout Details
+              </Link>
+            </div>
           </div>
         </div>
       ) : null}

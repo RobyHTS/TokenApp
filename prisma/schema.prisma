@@ -19,8 +19,24 @@ model Hospital {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  doctors     Doctor[]
-  favorites   Favorite[]
+  doctors       Doctor[]
+  favorites     Favorite[]
+  payoutDetails PayoutDetails?
+}
+
+model PayoutDetails {
+  id                String   @id @default(cuid())
+  hospitalId        String   @unique
+  upiId             String?
+  accountHolderName String?
+  bankName          String?
+  accountNumber     String?
+  ifscCode          String?
+  accountType       String?  @default("Current")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  hospital Hospital @relation(fields: [hospitalId], references: [id], onDelete: Cascade)
 }
 
 model Doctor {
