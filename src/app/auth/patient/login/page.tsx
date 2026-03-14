@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { User, Eye, EyeOff } from "lucide-react";
+import { User, Eye, EyeOff, Zap } from "lucide-react";
 
 export default function PatientLoginPage() {
   const router = useRouter();
@@ -12,15 +12,14 @@ export default function PatientLoginPage() {
   const [error, setError] = useState("");
   const [form, setForm] = useState({ phone: "", password: "" });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const login = async (credentials: { phone: string; password: string }) => {
     setLoading(true);
     setError("");
 
     const res = await fetch("/api/auth/patient/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
+      body: JSON.stringify(credentials),
     });
 
     const data = await res.json();
@@ -31,6 +30,17 @@ export default function PatientLoginPage() {
     } else {
       setError(data.error || "Login failed");
     }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await login(form);
+  };
+
+  const handleDemoLogin = async () => {
+    const demo = { phone: "9123456789", password: "password123" };
+    setForm(demo);
+    await login(demo);
   };
 
   return (
@@ -50,6 +60,25 @@ export default function PatientLoginPage() {
               {error}
             </div>
           )}
+
+          {/* Demo Login Banner */}
+          <div className="bg-green-50 border border-green-200 rounded-xl p-4 mb-5">
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <p className="text-sm font-semibold text-green-800">Try Demo Account</p>
+                <p className="text-xs text-green-600 mt-0.5">Phone: 9123456789 · Pass: password123</p>
+              </div>
+              <button
+                type="button"
+                onClick={handleDemoLogin}
+                disabled={loading}
+                className="flex items-center gap-1.5 bg-green-600 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-green-700 transition-colors disabled:opacity-50 shrink-0"
+              >
+                <Zap className="w-3.5 h-3.5" />
+                Demo Login
+              </button>
+            </div>
+          </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
