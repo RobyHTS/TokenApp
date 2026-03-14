@@ -45,37 +45,159 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-24 pb-20 bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+      <section className="pt-24 pb-20 bg-gradient-to-br from-blue-50 via-white to-indigo-50 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-6 border border-blue-100">
-              <CheckCircle className="w-4 h-4" />
-              Digital Hospital Queue Management
+          <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[520px]">
+            {/* Left — copy */}
+            <div>
+              <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-6 border border-blue-100">
+                <CheckCircle className="w-4 h-4" />
+                Digital Hospital Queue Management
+              </div>
+              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                Skip the Wait,
+                <span className="text-blue-600"> Book Your Token</span>{" "}
+                From Home
+              </h1>
+              <p className="text-xl text-gray-600 mb-10 leading-relaxed">
+                No more early morning rushes. Book your hospital consultation token online,
+                track the queue in real-time, and arrive just in time for your appointment.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link
+                  href="/auth/patient/register"
+                  className="flex items-center justify-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-blue-700 transition-all hover:shadow-lg"
+                >
+                  Book Your Token
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+                <Link
+                  href="/auth/hospital/register"
+                  className="flex items-center justify-center gap-2 border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-xl text-lg font-semibold hover:border-blue-600 hover:text-blue-600 transition-all"
+                >
+                  Register Hospital
+                  <Hospital className="w-5 h-5" />
+                </Link>
+              </div>
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              Skip the Wait,
-              <span className="text-blue-600"> Book Your Token</span>
-              <br />From Home
-            </h1>
-            <p className="text-xl text-gray-600 mb-10 leading-relaxed max-w-2xl mx-auto">
-              No more early morning rushes. Book your hospital consultation token online,
-              track the queue in real-time, and arrive just in time for your appointment.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/auth/patient/register"
-                className="flex items-center justify-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-blue-700 transition-all hover:shadow-lg"
-              >
-                Book Your Token
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-              <Link
-                href="/auth/hospital/register"
-                className="flex items-center justify-center gap-2 border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-xl text-lg font-semibold hover:border-blue-600 hover:text-blue-600 transition-all"
-              >
-                Register Hospital
-                <Hospital className="w-5 h-5" />
-              </Link>
+
+            {/* Right — illustration */}
+            <div className="relative flex items-center justify-center">
+              {/* Glow rings */}
+              <div className="absolute w-80 h-80 rounded-full bg-blue-100 opacity-50 blur-3xl" />
+              <div className="absolute w-56 h-56 rounded-full bg-indigo-200 opacity-40 blur-2xl translate-x-16 -translate-y-8" />
+
+              {/* Phone mockup */}
+              <div className="relative z-10 w-64 bg-white rounded-[2.5rem] shadow-2xl border-4 border-gray-200 overflow-hidden">
+                {/* Status bar */}
+                <div className="bg-blue-600 px-4 pt-5 pb-6">
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="text-white text-xs font-medium opacity-80">9:41 AM</span>
+                    <div className="flex gap-1">
+                      <div className="w-3 h-1.5 bg-white/80 rounded-sm" />
+                      <div className="w-3 h-1.5 bg-white/80 rounded-sm" />
+                      <div className="w-3 h-1.5 bg-white/80 rounded-sm" />
+                    </div>
+                  </div>
+                  <p className="text-blue-100 text-xs mb-1">Your Token</p>
+                  <div className="flex items-end gap-3">
+                    <span className="text-white text-6xl font-black leading-none">#42</span>
+                    <span className="text-blue-200 text-sm mb-1">Cardiology</span>
+                  </div>
+                </div>
+
+                {/* Card body */}
+                <div className="px-4 py-4 space-y-3">
+                  {/* Doctor row */}
+                  <div className="flex items-center gap-3 bg-gray-50 rounded-xl p-3">
+                    <div className="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+                      <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold text-gray-800">Dr. Priya Sharma</p>
+                      <p className="text-xs text-gray-500">Apollo Hospitals</p>
+                    </div>
+                  </div>
+
+                  {/* Queue status */}
+                  <div className="bg-green-50 rounded-xl p-3 border border-green-100">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                      <span className="text-xs font-semibold text-green-700">Live Queue</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <div className="text-center">
+                        <p className="text-xl font-black text-gray-900">38</p>
+                        <p className="text-xs text-gray-400">Current</p>
+                      </div>
+                      <div className="h-8 w-px bg-gray-200" />
+                      <div className="text-center">
+                        <p className="text-xl font-black text-blue-600">4</p>
+                        <p className="text-xs text-gray-400">Ahead</p>
+                      </div>
+                      <div className="h-8 w-px bg-gray-200" />
+                      <div className="text-center">
+                        <p className="text-xl font-black text-orange-500">~20m</p>
+                        <p className="text-xs text-gray-400">Wait</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Progress bar */}
+                  <div>
+                    <div className="flex justify-between text-xs text-gray-400 mb-1">
+                      <span>Queue progress</span>
+                      <span>80%</span>
+                    </div>
+                    <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                      <div className="h-2 bg-blue-500 rounded-full" style={{ width: "80%" }} />
+                    </div>
+                  </div>
+
+                  {/* Wallet */}
+                  <div className="flex items-center justify-between bg-indigo-50 rounded-xl px-3 py-2 border border-indigo-100">
+                    <span className="text-xs text-indigo-600 font-medium">Wallet Balance</span>
+                    <span className="text-sm font-bold text-indigo-700">₹750</span>
+                  </div>
+                </div>
+
+                {/* Home indicator */}
+                <div className="flex justify-center pb-3 pt-1">
+                  <div className="w-20 h-1 bg-gray-300 rounded-full" />
+                </div>
+              </div>
+
+              {/* Floating cards */}
+              <div className="absolute top-4 -left-4 bg-white rounded-2xl shadow-lg px-4 py-3 border border-gray-100 z-20">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                    <CheckCircle className="w-4 h-4 text-green-600" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-gray-800">Token Confirmed</p>
+                    <p className="text-xs text-gray-400">Just now</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="absolute bottom-10 -right-4 bg-white rounded-2xl shadow-lg px-4 py-3 border border-gray-100 z-20">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
+                    <Bell className="w-4 h-4 text-orange-500" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-gray-800">2 ahead of you!</p>
+                    <p className="text-xs text-gray-400">Head to hospital</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="absolute top-1/2 -right-8 bg-blue-600 rounded-2xl shadow-lg px-4 py-3 z-20">
+                <p className="text-xs font-bold text-white">500+</p>
+                <p className="text-xs text-blue-200">Daily bookings</p>
+              </div>
             </div>
           </div>
 
@@ -114,16 +236,6 @@ export default function LandingPage() {
                 description: "Patients need to call the hospital multiple times just to check doctor availability"
               },
               {
-                icon: "🚶",
-                title: "Travel Just for Token",
-                description: "Patients travel to the hospital only to collect a physical token, then come back again"
-              },
-              {
-                icon: "⏰",
-                title: "Unknown Wait Times",
-                description: "Patients don't know their turn number until they physically reach the hospital"
-              },
-              {
                 icon: "🏥",
                 title: "Long Waiting Queues",
                 description: "Hours spent waiting at hospitals for regular checkups due to poor queue management"
@@ -137,6 +249,16 @@ export default function LandingPage() {
                 icon: "💼",
                 title: "Med Rep Crowding",
                 description: "Medical representatives disrupt patient flow with unstructured hospital visits"
+              },
+              {
+                icon: "⏰",
+                title: "Unknown Wait Times",
+                description: "Patients don't know their turn number until they physically reach the hospital"
+              },
+              {
+                icon: "🕐",
+                title: "Appointments Never On Time",
+                description: "Even when appointments are booked, consultations rarely happen at the scheduled time"
               }
             ].map((problem) => (
               <div key={problem.title} className="p-6 bg-red-50 rounded-2xl border border-red-100">
